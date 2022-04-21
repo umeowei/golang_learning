@@ -23,7 +23,7 @@ func main() {
 	}
 
 	for _, element := range tests {
-		fmt.Printf("One pair: %v. All pairs: %v\n", GetPair(element.arr, element.targetSum), GetAllPairs(element.arr, element.targetSum))
+		fmt.Printf("One pair: %v. One pair by map: %v. All pairs: %v\n", GetPair(element.arr, element.targetSum), GetPairByMap(element.arr, element.targetSum), GetAllPairs(element.arr, element.targetSum))
 	}
 }
 
@@ -52,4 +52,19 @@ func GetAllPairs(arr []int, targetSum int) [][]int {
 		}
 	}
 	return output
+}
+
+// The function returns a pair of numbers from the input array, the sum of which is equal to target sum
+// In this case, the target amount cannot be obtained from the same number
+// Pairs are obtained using map.
+func GetPairByMap(array []int, target int) []int {
+	nums := map[int]bool{}
+	for _, num := range array {
+		potentialmatch := target - num
+		if _, found := nums[potentialmatch]; found {
+			return []int{potentialmatch, num}
+		}
+		nums[num] = true
+	}
+	return []int{}
 }
